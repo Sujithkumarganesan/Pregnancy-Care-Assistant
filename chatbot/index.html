@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Care Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="background-decoration">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>Pregnancy Care Assistant</h1>
+            </div>
+            <p class="tagline">Your trusted companion for a healthy pregnancy journey</p>
+        </header>
+
+        <!-- Info Cards Section -->
+        <section class="info-cards">
+            <div class="card" onclick="showBabyDevelopment()">
+                <div class="card-icon">
+                    <i class="fas fa-baby"></i>
+                </div>
+                <h3>Baby Development</h3>
+                <p>Track your baby's growth week by week</p>
+            </div>
+            <div class="card" onclick="showNutritionGuide()">
+                <div class="card-icon">
+                    <i class="fas fa-apple-alt"></i>
+                </div>
+                <h3>Nutrition Guide</h3>
+                <p>Month-by-month food recommendations</p>
+            </div>
+            <div class="card" onclick="showExerciseTips()">
+                <div class="card-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h3>Exercise Tips</h3>
+                <p>Safe exercises for each trimester</p>
+            </div>
+            <div class="card" onclick="showAppointments()">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3>Appointments</h3>
+                <p>Never miss important checkups</p>
+            </div>
+            <div class="card" onclick="showEmergencyChecker()">
+                <div class="card-icon">
+                    <i class="fas fa-triangle-exclamation"></i>
+                </div>
+                <h3>Emergency Symptoms</h3>
+                <p>Know when to call your doctor or go to hospital</p>
+            </div>
+            <div class="card" onclick="openMedicineChecker()">
+                <div class="card-icon">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <h3>Medicine Safety Checker</h3>
+                <p>Check if a medicine is generally safe in pregnancy</p>
+            </div>
+            <div class="card" onclick="openPregnancyTracker()">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-week"></i>
+                </div>
+                <h3>Pregnancy Tracker</h3>
+                <p>Track your pregnancy week by week</p>
+            </div>
+        </section>
+
+        <!-- Quick Tips Section -->
+        <section class="quick-tips">
+            <h2><i class="fas fa-lightbulb"></i> Quick Tips for Today</h2>
+            <div class="tips-container">
+                <div class="tip">
+                    <i class="fas fa-water"></i>
+                    <p>Stay hydrated - drink at least 8-10 glasses of water daily</p>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-bed"></i>
+                    <p>Get adequate rest - aim for 7-9 hours of sleep</p>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-walking"></i>
+                    <p>Take short walks to improve circulation</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for detailed information -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Medicine Safety Checker Chatbot (separate) -->
+    <div class="chatbot-container" id="medicineChatbotContainer">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-pills"></i>
+                <span>Pregnancy Medicine Safety Checker</span>
+            </div>
+            <button class="close-chat" id="closeMedicineChat" aria-label="Close Medicine Chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chatbot-messages" id="medicineChatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <div class="message-content">
+                    <p><strong>Welcome to the Pregnancy Medicine Safety Checker.</strong></p>
+                    <p>Here you can quickly check how a medicine is usually viewed in pregnancy.</p>
+                    <ul>
+                        <li><strong>Safe</strong> – generally OK in pregnancy when used correctly.</li>
+                        <li><strong>Consult Doctor</strong> – may be used only if your doctor decides you need it.</li>
+                        <li><strong>Avoid</strong> – usually not recommended in pregnancy.</li>
+                    </ul>
+                    <p>Type the name of a tablet, syrup or injection and I will show you the category and short advice.</p>
+                    <p><em>This is general information only. Always follow your own doctor’s instructions.</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbot-input-container">
+            <div class="input-wrapper">
+                <textarea 
+                    id="medicineUserInput" 
+                    placeholder="Enter medicine name here" 
+                    rows="1"
+                    maxlength="200"
+                ></textarea>
+                <button id="medicineSendMessage" aria-label="Check Medicine">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Toggle Button -->
+    <button class="chat-toggle" id="chatToggle" aria-label="Toggle Chat">
+        <i class="fas fa-comments"></i>
+        <span class="chat-badge">Ask me anything!</span>
+    </button>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-robot"></i>
+                <span>Pregnancy Care Assistant</span>
+            </div>
+            <button class="close-chat" id="closeChat" aria-label="Close Chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>Hello! I'm your Pregnancy Care Assistant. 👋</p>
+                    <p>I'm here to help you with questions about pregnancy, nutrition, exercise, baby development, and more. How can I assist you today?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbot-input-container">
+            <div class="quick-questions">
+                <button class="quick-question" data-question="What foods should I eat during pregnancy?">
+                    <i class="fas fa-utensils"></i> Nutrition tips
+                </button>
+                <button class="quick-question" data-question="What exercises are safe during pregnancy?">
+                    <i class="fas fa-running"></i> Safe exercises
+                </button>
+                <button class="quick-question" data-question="What are the signs of labor?">
+                    <i class="fas fa-info-circle"></i> Labor signs
+                </button>
+            </div>
+            <div class="input-wrapper">
+                <textarea 
+                    id="userInput" 
+                    placeholder="Type your question here..." 
+                    rows="1"
+                    maxlength="500"
+                ></textarea>
+                <button id="voiceInput" aria-label="Start voice input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button id="sendMessage" aria-label="Send Message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><i class="fas fa-heart"></i> Always consult with your healthcare provider for personalized medical advice</p>
+    </footer>
+
+    <!-- Pregnancy Tracker Modal -->
+    <div id="pregnancyTrackerModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="close-modal" onclick="closePregnancyTracker()">&times;</span>
+            <div id="trackerContent">
+                <!-- Calculator View -->
+                <div id="calculatorView">
+                    <h2><i class="fas fa-calculator"></i> Pregnancy Week Calculator</h2>
+                    <p>Enter your last menstrual period or due date to track your pregnancy progress.</p>
+                    
+                    <div class="input-group">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" onclick="switchTab('lmp')">Last Period</button>
+                            <button class="tab-btn" onclick="switchTab('edd')">Due Date</button>
+                        </div>
+                        
+                        <div id="lmpTab" class="tab-content active">
+                            <label for="lastPeriod">First day of last period:</label>
+                            <input type="date" id="lastPeriod" class="form-control">
+                        </div>
+                        
+                        <div id="eddTab" class="tab-content">
+                            <label for="dueDate">Expected due date:</label>
+                            <input type="date" id="dueDate" class="form-control">
+                        </div>
+                        
+                        <button class="btn-primary" onclick="calculatePregnancy()">Calculate</button>
+                    </div>
+                </div>
+                
+                <!-- Dashboard View (initially hidden) -->
+                <div id="dashboardView" style="display: none;">
+                    <div class="dashboard-header">
+                        <h2 id="weekTitle">Week <span id="currentWeek">12</span> of Pregnancy</h2>
+                        <p class="due-date">Due: <span id="displayDueDate">June 15, 2025</span> • <span id="daysLeft">196 days to go</span></p>
+                    </div>
+                    
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card baby-size">
+                            <div class="card-icon"><i class="fas fa-baby"></i></div>
+                            <h3>Baby Size</h3>
+                            <p id="babySize">About the size of a plum</p>
+                        </div>
+                        
+                        <div class="dashboard-card trimester">
+                            <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <h3>Trimester</h3>
+                            <p id="trimester">First Trimester</p>
+                        </div>
+                        
+                        <div class="dashboard-card appointments">
+                            <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
+                            <h3>This Week</h3>
+                            <p id="appointmentReminder">-</p>
+                        </div>
+                        
+                        <div class="dashboard-card nutrition">
+                            <div class="card-icon"><i class="fas fa-utensils"></i></div>
+                            <h3>Nutrition Tip</h3>
+                            <p id="nutritionTip">-</p>
+                        </div>
+                    </div>
+                    
+                    <div class="weekly-update">
+                        <h3><i class="fas fa-baby-carriage"></i> This Week's Development</h3>
+                        <div id="weeklyDevelopment">Loading...</div>
+                        
+                        <h3><i class="fas fa-female"></i> Your Body Changes</h3>
+                        <div id="bodyChanges">Loading...</div>
+
+                        <h3><i class="fas fa-walking"></i> Safe Exercises</h3>
+                        <div id="weeklyExercises">Loading...</div>
+
+                        <h3><i class="fas fa-exclamation-triangle"></i> Warning Symptoms</h3>
+                        <div id="weeklyWarnings">Loading...</div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn-secondary" onclick="editDueDate()"><i class="fas fa-edit"></i> Edit Due Date</button>
+                            <button class="btn-primary" onclick="setReminder()"><i class="fas fa-bell"></i> Set Weekly Reminder</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
